@@ -1,0 +1,2 @@
+rootProject.name='thirty_days_of_kotlin'
+include ':app'
