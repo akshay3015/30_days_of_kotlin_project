@@ -1,5 +1,6 @@
 package edu.self.thirty_days_of_kotlin.movielist
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.raywenderlich.wewatch.network.RetrofitClient
 import edu.self.thirty_days_of_kotlin.R
+import edu.self.thirty_days_of_kotlin.model.ResultsItem
+import edu.self.thirty_days_of_kotlin.moviedetails.MovieDetailsActivity
 import edu.self.thirty_days_of_kotlin.movielist.adapter.MovieListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +21,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MovieListAdapter.OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,10 @@ class MainActivity : AppCompatActivity() {
                         rv_movies.layoutManager = gridLayoutManager
                         val movielist = response.body()?.results
                         Log.d("res", response.body()?.results.toString())
-                        rv_movies.adapter = MovieListAdapter(movieList = movielist)
+                        rv_movies.adapter = MovieListAdapter(
+                            movieList = movielist,
+                            listener = this@MainActivity
+                        )
                         (rv_movies.adapter as MovieListAdapter).notifyDataSetChanged()
 
                     } else {
@@ -78,5 +84,17 @@ class MainActivity : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             tv_error_message_display.visibility = View.VISIBLE
         }
+    }
+
+    override fun onItemClick(item: ResultsItem?, pos: Int) {
+        val i = Intent(this@MainActivity, MovieDetailsActivity::class.java)
+        i.putExtra("title", item?.title)
+        i.putExtra("poster_url", item?.posterPath)
+        i.putExtra("release_date", item?.releaseDate)
+        i.putExtra("rating", item?.voteAverage)
+        i.putExtra("plot", item?.overview)
+        i.putExtra("id", item?.id)
+        startActivity(i)
+
     }
 }
