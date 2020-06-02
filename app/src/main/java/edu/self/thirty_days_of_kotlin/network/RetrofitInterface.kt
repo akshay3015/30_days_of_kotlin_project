@@ -33,6 +33,7 @@ package com.raywenderlich.wewatch.network
 
 import edu.self.thirty_days_of_kotlin.model.ResponseTopRated
 import edu.self.thirty_days_of_kotlin.moviedetails.model.ResponseReviews
+import edu.self.thirty_days_of_kotlin.moviedetails.model.ResponseTrailer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -45,4 +46,7 @@ interface RetrofitInterface {
 
     @GET("movie/{id}/reviews")
     suspend fun getMovieReview(@Path("id") id: String?, @Query("api_key") apiKey: String) :Response<ResponseReviews>
+
+    @GET("movie/{id}/videos")
+    suspend fun getTrailers(@Path("id") id: String?,@Query("api_key") apiKey: String) : Response<ResponseTrailer>
 }
