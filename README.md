@@ -10,5 +10,4 @@
 - [x] <b> Data Classes :</b>data classes are used to api response
 - [x] <b> kotlin extension function :</b>  recycler view clicks are handled using kotlin extension function
 - [x] <b> lamda :</b> annonymous function calls are replaced with lamda
-- [x] <b> Named Parameters :</b> named parameters used in constructor.
 - [x] <b> Kotlin synthetic:</b>  kotlin synthetic is used eliminated find view by id 
